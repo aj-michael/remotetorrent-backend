@@ -20,5 +20,7 @@ fun main(args: Array<String>) {
     pusher.connect()
     val channel = pusher.subscribePrivate(pusherChannel)
     channel.bind(pusherEvent, MessageHandler(args[0]))
-    while(true) {}
+    while(true) {
+        Thread.sleep(10000);
+    }
 }
