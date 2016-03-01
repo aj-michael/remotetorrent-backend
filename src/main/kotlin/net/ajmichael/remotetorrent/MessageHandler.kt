@@ -4,10 +4,18 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Manager
-import com.pusher.client.channel.SubscriptionEventListener
+import com.pusher.client.channel.PrivateChannelEventListener
 import org.apache.log4j.Logger
 
-class MessageHandler(val downloadDir: String) : SubscriptionEventListener {
+class MessageHandler(val downloadDir: String) : PrivateChannelEventListener {
+    override fun onSubscriptionSucceeded(channelName: String?) {
+        log.info("Subscribed to ${channelName}")
+    }
+
+    override fun onAuthenticationFailure(message: String?, e: Exception?) {
+        log.warn("Failed authentication: ${message}")
+    }
+
     val log = Logger.getLogger(this.javaClass)
     val partialsInProgress: MutableMap<String, MutableList<PartialMessage>> = hashMapOf()
     val mapper = jacksonObjectMapper()
