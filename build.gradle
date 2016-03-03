@@ -1,5 +1,4 @@
 group 'net.ajmichael.remotetorrent'
-version '1.0.0'
 
 buildscript {
     ext.kotlin_version = '1.0.0'
