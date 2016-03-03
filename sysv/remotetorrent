@@ -1,0 +1,28 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:           remotetorrent
+# Required-Start:     $remote_fs $syslog
+# Required-Stop:      $remote_fs $syslog
+# Default-Start:      2 3 4 5
+# Default-Stop:       0 1 6
+# Short-Description:  Start remote torrent backend
+# Description:        Backend for remote torrent service
+### END INIT INFO
+
+
+case $1 in
+  start)
+    . /etc/default/remotetorrent
+    /bin/bash /usr/local/bin/remotetorrent-start.sh $RT_PUSHER_APP_KEY $RT_DESTINATION
+  ;;
+  stop)
+    /bin/bash /usr/local/bin/remotetorrent-stop.sh
+  ;;
+  restart)
+    /bin/bash /usr/local/bin/remotetorrent-stop.sh
+    . /etc/default/remotetorrent
+    /bin/bash /usr/local/bin/remotetorrent-start.sh $RT_PUSHER_APP_KEY $RT_DESTINATION
+  ;;
+esac
+exit 0
