@@ -15,12 +15,13 @@ fun main(args: Array<String>) {
     BasicConfigurator.configure()
     Manager.instance.basePath = "http://127.0.0.1:9091"
     val authorizer = HttpAuthorizer("http://experiments.ajmichael.net/remotetorrent/auth")
-    val options = PusherOptions().setAuthorizer(authorizer);
-    val pusher = Pusher(pusherApiKey, options)
+    val options = PusherOptions().setAuthorizer(authorizer)
+    val pusherKey = if (pusherApiKey != null) pusherApiKey else args[1]
+    val pusher = Pusher(pusherKey, options)
     pusher.connect()
     val channel = pusher.subscribePrivate(pusherChannel)
     channel.bind(pusherEvent, MessageHandler(args[0]))
     while(true) {
-        Thread.sleep(10000);
+        Thread.sleep(10000)
     }
 }
